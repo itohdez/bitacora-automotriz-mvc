@@ -1,5 +1,6 @@
 from app.controllers.bitacora_controller import BitacoraController
 
 if __name__ == "__main__":
-    aplicacion = BitacoraController()
-    aplicacion.iniciar()
+    # Cambia a "consola" si quieres volver a la terminal
+    aplicacion = BitacoraController(modo="grafico") 
+    aplicacion.vista.iniciar()
