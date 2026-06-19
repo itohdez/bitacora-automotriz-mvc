@@ -16,6 +16,24 @@ El sistema fue construido aplicando principios de **Programación Orientada a Ob
 * **Vista (`app/views/`):** Construida con la librería externa `rich`, se encarga exclusivamente de mostrar menús coloridos y capturar la información del teclado. Es "ciega" a las reglas de negocio.
 * **Controlador (`app/controllers/`):** Orquesta la aplicación. Recibe los datos capturados por la Vista, los envía al Modelo para su validación/almacenamiento, y captura los errores del Modelo para pedirle a la Vista que muestre las alertas correspondientes.
 
+⚙️ Instalación y Ejecución
+Sigue estos pasos para ejecutar el proyecto en tu entorno local:
+
+1. Clona este repositorio:
+    git clone <https://github.com/itohdez/bitacora-automotriz-mvc.git>
+
+2. Instala las dependencias necesarias:
+    pip install -r requirements.txt
+
+3. Ejecuta la aplicación:
+    python main.py
+
+🧪 Pruebas Automatizadas
+El proyecto utiliza pytest para garantizar la estabilidad del Modelo mediante el enfoque TDD (Test-Driven Development). Se incluyen pruebas válidas (creación y sumas) y pruebas inválidas (manejo de errores ante datos corruptos).
+
+Para correr los tests, ejecuta en la terminal:
+pytest
+
 ## 📊 Diagrama de Clases
 
 ```mermaid
@@ -46,21 +64,3 @@ classDiagram
     
     GestorBitacora "1" --> "*" Vehiculo : Administra
     Vehiculo "1" --> "*" Servicio : Contiene
-
-⚙️ Instalación y Ejecución
-Sigue estos pasos para ejecutar el proyecto en tu entorno local:
-
-1. Clona este repositorio:
-    git clone <https://github.com/itohdez/bitacora-automotriz-mvc.git>
-
-2. Instala las dependencias necesarias:
-    pip install -r requirements.txt
-
-3. Ejecuta la aplicación:
-    python main.py
-
-🧪 Pruebas Automatizadas
-El proyecto utiliza pytest para garantizar la estabilidad del Modelo mediante el enfoque TDD (Test-Driven Development). Se incluyen pruebas válidas (creación y sumas) y pruebas inválidas (manejo de errores ante datos corruptos).
-
-Para correr los tests, ejecuta en la terminal:
-pytest
