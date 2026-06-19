@@ -1,0 +1,9 @@
+{
+    "EVA50I": {
+        "placa": "EVA50I",
+        "marca": "YAMAHA",
+        "kilometraje_actual": 3900,
+        "tipo": "Moto",
+        "historial_servicios": []
+    }
+}

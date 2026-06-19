@@ -19,11 +19,14 @@ class GraficaView:
         self.btn_consultar = tk.Button(self.root, text="Consultar Historial", width=25)
         self.btn_consultar.pack(pady=5)
         
+        self.btn_eliminar = tk.Button(self.root, text="Eliminar Vehículo", width=25)
+        self.btn_eliminar.pack(pady=5)
+        
     def iniciar(self):
+        """Este es el método que faltaba para arrancar el bucle principal de la GUI."""
         self.root.mainloop()
 
     def abrir_formulario_registro(self, callback):
-        # Aseguramos que "Tipo" esté en la lista
         self._crear_ventana_input("Nuevo Vehículo", ["Tipo", "Placa", "Marca", "Kilometraje"], callback)
 
     def abrir_formulario_servicio(self, callback):
@@ -32,36 +35,38 @@ class GraficaView:
     def abrir_formulario_consulta(self, callback):
         self._crear_ventana_input("Consultar Historial", ["Placa"], callback)
 
+    def configurar_callback_eliminar(self, callback):
+        self.callback_eliminar = callback
+        self.btn_eliminar.config(command=self.solicitar_eliminacion)
+
+    def solicitar_eliminacion(self):
+        self._crear_ventana_input("Eliminar Vehículo", ["Placa"], self.callback_eliminar)
+
     def _crear_ventana_input(self, titulo, campos, callback):
         top = tk.Toplevel(self.root)
         top.title(titulo)
+        top.geometry("300x400")
         entries = {}
-        
         for campo in campos:
-            tk.Label(top, text=campo).pack()
-            
-            # Lógica inteligente para seleccionar el widget adecuado
-            if campo == "Fecha":
-                e = DateEntry(top, date_pattern='dd/mm/yyyy')
+            tk.Label(top, text=campo, pady=5).pack()
+            if campo == "Fecha": 
+                e = DateEntry(top, width=20, date_pattern='dd/mm/yyyy')
             elif campo == "Tipo":
                 e = tk.StringVar(value="Auto")
                 tk.OptionMenu(top, e, "Auto", "Moto").pack()
-            else:
-                e = tk.Entry(top)
+            else: 
+                e = tk.Entry(top, width=30)
             
-            # Solo hacemos .pack() si no es el OptionMenu (que ya se empaqueta arriba)
-            if not isinstance(e, tk.StringVar):
+            if not isinstance(e, tk.StringVar): 
                 e.pack()
-                
             entries[campo.lower()] = e
         
         def enviar():
-            # Extraemos el valor correctamente, sea Entry o StringVar
             datos = {k: v.get() if isinstance(v, (tk.Entry, tk.StringVar)) else v.get() for k, v in entries.items()}
             callback(datos)
             top.destroy()
             
-        tk.Button(top, text="Confirmar", command=enviar).pack(pady=10)
+        tk.Button(top, text="Confirmar", command=enviar, width=20).pack(pady=20)
 
     def mostrar_mensaje(self, mensaje: str, exito: bool = True):
         messagebox.showinfo("Info" if exito else "Error", mensaje)

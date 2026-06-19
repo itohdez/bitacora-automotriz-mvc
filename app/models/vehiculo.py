@@ -4,7 +4,7 @@ class Vehiculo:
     """Clase que representa un vehículo (Auto o Moto) y gestiona su historial."""
 
     def __init__(self, placa: str, marca: str, kilometraje_actual: int, tipo: str):
-        if kilometraje_actual < 0:
+        if int(kilometraje_actual) < 0:
             raise ValueError("El kilometraje actual no puede ser negativo.")
         
         # Clasificamos el tipo de vehículo al nacer el objeto
@@ -14,7 +14,7 @@ class Vehiculo:
             
         self.placa = placa.upper()
         self.marca = marca
-        self.kilometraje_actual = kilometraje_actual
+        self.kilometraje_actual = int(kilometraje_actual)
         self.tipo = tipo_formateado
         self.historial_servicios = []  
 
@@ -26,7 +26,21 @@ class Vehiculo:
 
     def obtener_total_gastado(self) -> float:
         """Encapsulamiento: El vehículo sabe cómo sumar sus propios gastos."""
-        total = 0.0
-        for servicio in self.historial_servicios:
-            total += servicio.costo
-        return total
+        return sum(servicio.costo for servicio in self.historial_servicios)
+
+    def to_dict(self):
+        """Convierte el objeto a un diccionario para poder guardarlo en JSON."""
+        return {
+            "placa": self.placa,
+            "marca": self.marca,
+            "kilometraje_actual": self.kilometraje_actual,
+            "tipo": self.tipo,
+            "historial_servicios": [
+                {
+                    "fecha": s.fecha,
+                    "descripcion": s.descripcion,
+                    "costo": s.costo,
+                    "kilometraje_servicio": s.kilometraje_servicio
+                } for s in self.historial_servicios
+            ]
+        }
