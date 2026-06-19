@@ -1,8 +1,12 @@
 from app.controllers.bitacora_controller import BitacoraController
+from app.views.grafica_view import GraficaView
 
 if __name__ == "__main__":
-    # Punto de entrada principal: instancia el controlador (que a su vez carga modelo y vista)
-    aplicacion = BitacoraController()
+    # 1. Instanciamos la vista primero
+    vista = GraficaView()
     
-    # Inicia el ciclo de vida de la interfaz gráfica
-    aplicacion.vista.iniciar()
+    # 2. Pasamos la vista al controlador para que él la gestione
+    aplicacion = BitacoraController(vista)
+    
+    # 3. Iniciamos el ciclo de vida de la aplicación
+    vista.iniciar()

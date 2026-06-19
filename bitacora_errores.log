@@ -1,0 +1,6 @@
+2026-06-19 01:37:18,937 - ERROR - Ocurrió un error: 'GestorBitacora' object has no attribute 'buscar_vehiculo'
+Traceback (most recent call last):
+  File "C:\Users\andre\OneDrive\Documentos\proyecto_bitacora\app\controllers\bitacora_controller.py", line 74, in registrar_servicio
+    v = self.gestor.buscar_vehiculo(datos["placa"])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GestorBitacora' object has no attribute 'buscar_vehiculo'. Did you mean: 'registrar_vehiculo'?

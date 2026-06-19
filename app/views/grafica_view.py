@@ -1,91 +1,99 @@
+import customtkinter as ctk
 import tkinter as tk
 from tkinter import messagebox
 from tkcalendar import DateEntry
 
+# Configuración estética
+ctk.set_appearance_mode("Dark")
+ctk.set_default_color_theme("blue")
+
 class GraficaView:
-    """Clase encargada de la interfaz gráfica de usuario utilizando Tkinter."""
+    """Interfaz gráfica moderna utilizando CustomTkinter con layouts corregidos."""
 
     def __init__(self):
-        self.root = tk.Tk()
+        self.root = ctk.CTk()
         self.root.title("Bitácora Automotriz MVC")
-        self.root.geometry("400x400")
+        self.root.geometry("400x550")
         
-        tk.Label(self.root, text="Bitácora Automotriz", font=("Arial", 16, "bold")).pack(pady=15)
+        self.label = ctk.CTkLabel(self.root, text="Bitácora Automotriz", font=("Arial", 20, "bold"))
+        self.label.pack(pady=20)
         
-        # Botones principales: su acción será configurada por el controlador
-        self.btn_registrar = tk.Button(self.root, text="Registrar Vehículo", width=25)
-        self.btn_registrar.pack(pady=5)
-        self.btn_servicio = tk.Button(self.root, text="Registrar Mantenimiento", width=25)
-        self.btn_servicio.pack(pady=5)
-        self.btn_consultar = tk.Button(self.root, text="Consultar Historial", width=25)
-        self.btn_consultar.pack(pady=5)
-        self.btn_eliminar = tk.Button(self.root, text="Eliminar Vehículo", width=25)
-        self.btn_eliminar.pack(pady=5)
-        
-        # Botón para cerrar la aplicación de manera controlada
-        self.btn_salir = tk.Button(self.root, text="Salir", width=25, command=self.root.destroy)
+        # Botones principales
+        self.btn_registrar = ctk.CTkButton(self.root, text="Registrar Vehículo", width=200)
+        self.btn_registrar.pack(pady=10)
+        self.btn_servicio = ctk.CTkButton(self.root, text="Registrar Mantenimiento", width=200)
+        self.btn_servicio.pack(pady=10)
+        self.btn_consultar = ctk.CTkButton(self.root, text="Consultar Historial", width=200)
+        self.btn_consultar.pack(pady=10)
+        self.btn_eliminar = ctk.CTkButton(self.root, text="Eliminar Vehículo", width=200, fg_color="#FF4C4C")
+        self.btn_eliminar.pack(pady=10)
+        self.btn_exportar = ctk.CTkButton(self.root, text="Exportar a CSV", width=200, fg_color="#2ECC71") 
+        self.btn_exportar.pack(pady=10)
+        self.btn_salir = ctk.CTkButton(self.root, text="Salir", width=200, command=self.root.destroy, fg_color="#7F8C8D")
         self.btn_salir.pack(pady=20)
         
     def iniciar(self):
-        """Inicia el ciclo principal de eventos de la ventana."""
         self.root.mainloop()
 
-    def configurar_callback_eliminar(self, callback_abrir_lista):
-        """Asigna la lógica para abrir el selector de eliminación desde el controlador."""
-        self.btn_eliminar.config(command=callback_abrir_lista)
-
-    def solicitar_eliminacion_con_lista(self, placas_disponibles, callback_eliminar):
-        """Abre un modal con un menú desplegable para seleccionar la placa a eliminar."""
+    def _abrir_calendario(self, entry_widget):
         top = tk.Toplevel(self.root)
-        top.title("Eliminar Vehículo")
-        top.geometry("300x250")
+        top.title("Seleccionar Fecha")
+        cal = DateEntry(top, date_pattern='dd/mm/yyyy')
+        cal.pack(pady=20)
         
-        tk.Label(top, text="Selecciona la placa a eliminar:").pack(pady=10)
-        placa_var = tk.StringVar(value=placas_disponibles[0])
-        tk.OptionMenu(top, placa_var, *placas_disponibles).pack(pady=5)
-        
-        def confirmar():
-            callback_eliminar({"placa": placa_var.get()})
+        def aplicar():
+            entry_widget.delete(0, 'end')
+            entry_widget.insert(0, cal.get())
             top.destroy()
-            
-        tk.Button(top, text="Eliminar", command=confirmar).pack(pady=20)
-
-    # --- Métodos de apoyo: creación de formularios dinámicos ---
-    def abrir_formulario_registro(self, callback):
-        self._crear_ventana_input("Nuevo Vehículo", ["Tipo", "Placa", "Marca", "Kilometraje"], callback)
-
-    def abrir_formulario_servicio(self, callback):
-        self._crear_ventana_input("Nuevo Servicio", ["Placa", "Fecha", "Descripción", "Costo", "Kilometraje"], callback)
-
-    def abrir_formulario_consulta(self, callback):
-        self._crear_ventana_input("Consultar Historial", ["Placa"], callback)
+        tk.Button(top, text="Confirmar", command=aplicar).pack(pady=10)
 
     def _crear_ventana_input(self, titulo, campos, callback):
-        """Crea una ventana emergente genérica basada en una lista de campos requeridos."""
-        top = tk.Toplevel(self.root)
+        top = ctk.CTkToplevel(self.root)
         top.title(titulo)
-        top.geometry("300x400")
+        top.geometry("350x450")
+        top.attributes("-topmost", True)
+        
         entries = {}
+        # Título del formulario
+        ctk.CTkLabel(top, text=titulo, font=("Arial", 16, "bold")).pack(pady=15)
+        
         for campo in campos:
-            tk.Label(top, text=campo, pady=5).pack()
-            # Diferenciamos tipos de entrada: Fecha, Selección o Texto libre
-            if campo == "Fecha": e = DateEntry(top, width=20, date_pattern='dd/mm/yyyy')
-            elif campo == "Tipo":
-                e = tk.StringVar(value="Auto")
-                tk.OptionMenu(top, e, "Auto", "Moto").pack()
-            else: e = tk.Entry(top, width=30)
+            # FRAME PRINCIPAL PARA CADA CAMPO (Ordena Etiqueta + Input)
+            frame = ctk.CTkFrame(top, fg_color="transparent")
+            frame.pack(fill="x", padx=20, pady=5)
             
-            if not isinstance(e, tk.StringVar): e.pack()
+            # Etiqueta fija a la izquierda
+            ctk.CTkLabel(frame, text=campo, width=80, anchor="w").pack(side="left")
+            
+            # Input a la derecha
+            if campo == "Fecha":
+                e = ctk.CTkEntry(frame, width=120)
+                e.pack(side="left", padx=5)
+                ctk.CTkButton(frame, text="📅", width=30, command=lambda e=e: self._abrir_calendario(e)).pack(side="left")
+            elif campo == "Tipo":
+                e = ctk.CTkOptionMenu(frame, values=["Auto", "Moto"], width=150)
+                e.pack(side="left", padx=5)
+            else:
+                e = ctk.CTkEntry(frame, width=150)
+                e.pack(side="left", padx=5)
+            
             entries[campo.lower()] = e
         
         def enviar():
-            # Recolectamos datos de todos los widgets antes de llamar al callback
-            datos = {k: v.get() if isinstance(v, (tk.Entry, tk.StringVar)) else v.get() for k, v in entries.items()}
-            callback(datos)
+            callback({k: v.get() for k, v in entries.items()})
             top.destroy()
             
-        tk.Button(top, text="Confirmar", command=enviar, width=20).pack(pady=20)
+        ctk.CTkButton(top, text="Confirmar", command=enviar).pack(pady=30)
 
-    def mostrar_mensaje(self, mensaje: str, exito: bool = True):
-        """Despliega un mensaje de información o error mediante un cuadro de diálogo."""
-        messagebox.showinfo("Info" if exito else "Error", mensaje)
+    # Métodos de interfaz
+    def abrir_formulario_registro(self, callback): self._crear_ventana_input("Nuevo Vehículo", ["Tipo", "Placa", "Marca", "Kilometraje"], callback)
+    def abrir_formulario_servicio(self, callback): self._crear_ventana_input("Nuevo Servicio", ["Placa", "Fecha", "Descripción", "Costo", "Kilometraje"], callback)
+    def abrir_formulario_consulta(self, callback): self._crear_ventana_input("Consultar Historial", ["Placa"], callback)
+    def configurar_callback_eliminar(self, callback): self.btn_eliminar.configure(command=callback)
+    def mostrar_mensaje(self, msg, exito=True): messagebox.showinfo("Info" if exito else "Error", msg)
+    def solicitar_eliminacion_con_lista(self, placas, callback):
+        top = ctk.CTkToplevel(self.root)
+        top.geometry("300x200")
+        var = ctk.StringVar(value=placas[0])
+        ctk.CTkOptionMenu(top, variable=var, values=placas).pack(pady=20)
+        ctk.CTkButton(top, text="Eliminar", fg_color="red", command=lambda: [callback({"placa": var.get()}), top.destroy()]).pack()

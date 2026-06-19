@@ -1,9 +1,37 @@
 {
     "QHP510": {
         "placa": "QHP510",
-        "marca": "NISSAN",
-        "kilometraje_actual": 85000,
+        "marca": "nissan",
         "tipo": "Auto",
+        "kilometraje_actual": 125000,
+        "historial_servicios": [
+            {
+                "fecha": "18/06/2026",
+                "descripcion": "revision frenos",
+                "costo": 95000.0,
+                "kilometraje_servicio": 125000
+            }
+        ]
+    },
+    "EVA54I": {
+        "placa": "EVA54I",
+        "marca": "suzuki",
+        "tipo": "Moto",
+        "kilometraje_actual": 95000,
+        "historial_servicios": [
+            {
+                "fecha": "16/06/2026",
+                "descripcion": "cambios llantas",
+                "costo": 99000.0,
+                "kilometraje_servicio": 95000
+            }
+        ]
+    },
+    "DCN503": {
+        "placa": "DCN503",
+        "marca": "renault",
+        "tipo": "Auto",
+        "kilometraje_actual": 98000,
         "historial_servicios": []
     }
 }
