@@ -1,6 +1,6 @@
 # 🚗 Sistema de Bitácora Automotriz 🏍️
 
-Este proyecto es una aplicación de consola interactiva desarrollada en Python que permite a los usuarios (particulares o talleres mecánicos) llevar un registro detallado y organizado de los mantenimientos, gastos y el historial de servicios de sus vehículos (Autos y Motos).
+Este proyecto es una aplicación de escritorio desarrollada en Python que permite a los usuarios (particulares o talleres mecánicos) llevar un registro detallado y organizado de los mantenimientos, gastos y el historial de servicios de sus vehículos (Autos y Motos).
 
 ## 🏗️ Arquitectura y Patrones de Diseño
 
@@ -13,7 +13,7 @@ El sistema fue construido aplicando principios de **Programación Orientada a Ob
 
 ### Aplicación de MVC
 * **Modelo (`app/models/`):** Contiene la lógica pura (`Vehiculo`, `Servicio`, `GestorBitacora`). No tiene interacción con el usuario (sin `prints` ni `inputs`).
-* **Vista (`app/views/`):** Construida con la librería externa `rich`, se encarga exclusivamente de mostrar menús coloridos y capturar la información del teclado. Es "ciega" a las reglas de negocio.
+* **Vista (`app/views/`):** Construida con `tkinter`, se encarga de la interfaz gráfica de usuario. Es "ciega" a las reglas de negocio.
 * **Controlador (`app/controllers/`):** Orquesta la aplicación. Recibe los datos capturados por la Vista, los envía al Modelo para su validación/almacenamiento, y captura los errores del Modelo para pedirle a la Vista que muestre las alertas correspondientes.
 
 ## 📋 Prerrequisitos
@@ -26,7 +26,6 @@ Para ejecutar, es necesario tener instalado el lenguaje de programación Python 
 
 2. **Instalación (Importante):**
    * **En Windows:** Durante la instalación, **asegúrate de marcar la casilla que dice "Add Python to PATH"**. Este paso es crítico, ya que permite que la terminal reconozca el comando `python`.
-   * **En macOS/Linux:** Generalmente, Python ya viene instalado o se gestiona a través del gestor de paquetes de tu distribución.
 
 3. **Verificación:**
    Para confirmar que Python se instaló correctamente, abre una terminal y escribe:
@@ -38,7 +37,7 @@ Para ejecutar, es necesario tener instalado el lenguaje de programación Python 
 Para garantizar la portabilidad y el correcto funcionamiento del software en cualquier entorno, se han seguido estándares de desarrollo modular:
 
 * **Compatibilidad:** El sistema es compatible con Windows, macOS y Linux (requiere Python 3.x).
-* **Gestión de Dependencias:** El proyecto utiliza pip. Se incluye un archivo requirements.txt con las librerías necesarias (rich y pytest).
+* **Gestión de Dependencias:** El proyecto utiliza pip. Se incluye un archivo requirements.txt con las librerías necesarias.
 * **Recomendación de Entorno (Best Practice):** Se recomienda ejecutar el proyecto dentro de un Entorno Virtual (venv) para aislar las dependencias.
 
 ### Pasos para ejecutar el proyecto en tu entorno local:
