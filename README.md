@@ -2,6 +2,8 @@
 
 Este proyecto es una aplicación de escritorio desarrollada en Python que permite a los usuarios (particulares o talleres mecánicos) llevar un registro detallado y organizado de los mantenimientos, gastos y el historial de servicios de sus vehículos (Autos y Motos).
 
+> Tecnologías: Python 3.x, CustomTkinter, JSON (persistencia), CSV (reportes).
+
 ## 🏗️ Arquitectura y Patrones de Diseño
 
 El sistema fue construido aplicando principios de **Programación Orientada a Objetos (POO)** y el patrón arquitectónico **MVC (Modelo-Vista-Controlador)** para garantizar un código limpio, escalable y mantenible.
@@ -13,7 +15,7 @@ El sistema fue construido aplicando principios de **Programación Orientada a Ob
 
 ### Aplicación de MVC
 * **Modelo (`app/models/`):** Contiene la lógica pura (`Vehiculo`, `Servicio`, `GestorBitacora`). No tiene interacción con el usuario (sin `prints` ni `inputs`).
-* **Vista (`app/views/`):** Construida con `tkinter`, se encarga de la interfaz gráfica de usuario. Es "ciega" a las reglas de negocio.
+* **Vista (`app/views/`):** Construida con CustomTkinter (basada en tkinter), lo que permite una interfaz de usuario moderna con soporte nativo para temas oscuros y componentes estilizados.
 * **Controlador (`app/controllers/`):** Orquesta la aplicación. Recibe los datos capturados por la Vista, los envía al Modelo para su validación/almacenamiento, y captura los errores del Modelo para pedirle a la Vista que muestre las alertas correspondientes.
 
 ## 📋 Prerrequisitos
