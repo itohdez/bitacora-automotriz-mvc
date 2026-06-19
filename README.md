@@ -68,28 +68,33 @@ pytest
 ```mermaid
 classDiagram
     class Servicio {
-        -str fecha
-        -str descripcion
-        -float costo
-        -int kilometraje_servicio
+        +str fecha
+        +str descripcion
+        +float costo
+        +int kilometraje_servicio
+        +__str__() str
     }
     
     class Vehiculo {
-        -str placa
-        -str marca
-        -int kilometraje_actual
-        -str tipo
-        -list historial_servicios
-        +agregar_servicio(servicio) void
-        +obtener_total_gastado() float
+        +str placa
+        +str marca
+        +int kilometraje_actual
+        +str tipo
+        +list historial_servicios
+        +agregar_servicio(Servicio) void
+        +obtener_resumen() str
+        +to_dict() dict
     }
     
     class GestorBitacora {
-        -list vehiculos
-        +registrar_vehiculo(vehiculo) void
-        +buscar_vehiculo(placa) Vehiculo
-        +obtener_reporte_gastos_totales(placa) float
+        -dict vehiculos
+        +registrar_vehiculo(Vehiculo) void
+        +buscar_vehiculo(str placa) Vehiculo
+        +eliminar_vehiculo(str placa) bool
+        +guardar_datos() void
+        +cargar_datos() void
+        +exportar_a_csv(str nombre) void
     }
     
-    GestorBitacora "1" --> "*" Vehiculo : Administra
+    GestorBitacora "1" --> "*" Vehiculo : Gestiona
     Vehiculo "1" --> "*" Servicio : Contiene
